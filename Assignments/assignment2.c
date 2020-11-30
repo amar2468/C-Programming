@@ -14,7 +14,7 @@
 
 // Function Signatures. These are the functions that we will be using in this lotto game
 
-    void selected_numbers(int*,int*,int*); // Function to input numbers in the array
+    void selected_numbers(int*,int*,int*,int*,int*,int*,int*); // Function to input numbers in the array
 
     void display_numbers(int*); // Function that displays these numbers to screen
 
@@ -64,113 +64,111 @@ int main()
         scanf("%d", &option); // Records the option that the user picked
  
         
-            switch(option) // This switch will be made up of six cases that represent the six menu choices. Each case will perform the specific menu option that the user chooses
+        switch(option) // This switch will be made up of six cases that represent the six menu choices. Each case will perform the specific menu option that the user chooses
+        {
+            case 1: // This is if the user enters option 1, which asks the user to enter six numbers
             {
-                case 1: // This is if the user enters option 1, which asks the user to enter six numbers
-                {
-                    printf("\nEnter six numbers of your choice from 1 to 42 inclusive: \n");
-            
-                    selected_numbers(selectednumbers,countnumbers,&option); // This function will be returning two arrays and a variable
+                selected_numbers(selectednumbers,countnumbers,&option,&second_option,&third_option,&fourth_option,&fifth_option); // This function will be returning two arrays and a variable
                     
-                    second_option++; // Incremented in order to enable user to pick options 2 or 3 or 4 or 5
-                    third_option++;  // Incremented in order to enable user to pick options 2 or 3 or 4 or 5
-                    fourth_option++; // Incremented in order to enable user to pick options 2 or 3 or 4 or 5
-                    fifth_option++; // Incremented in order to enable user to pick options 2 or 3 or 4 or 5
+                second_option++; // Incremented in order to enable user to pick options 2 or 3 or 4 or 5
+                third_option++;  // Incremented in order to enable user to pick options 2 or 3 or 4 or 5
+                fourth_option++; // Incremented in order to enable user to pick options 2 or 3 or 4 or 5
+                fifth_option++; // Incremented in order to enable user to pick options 2 or 3 or 4 or 5
                 
-                    break; // This is required in order to quit the case after it is completed
+                break; // This is required in order to quit the case after it is completed
                         
-                }
+            }
         
-                case 2: // This is if the user enters option 2, which displays these numbers to screen
+            case 2: // This is if the user enters option 2, which displays these numbers to screen
+            {
+                if(second_option > 0)
                 {
-                    if(second_option > 0)
-                    {
-                        printf("\nThese are the numbers that you have selected: \n");
+                    printf("\nThese are the numbers that you have selected: \n");
             
-                        display_numbers(selectednumbers); // The numbers entered in option 1 will be returned to this function and displayed to screen
+                    display_numbers(selectednumbers); // The numbers entered in option 1 will be returned to this function and displayed to screen
             
-                        break; // Breaks the case so that we can move on to the next option
-                    }
-                    
-                    else
-                    {
-                        printf("\nYou must pick option 1 first\n"); // Error message if option 1 was not picked
-                        break;
-                    }
-                    
+                    break; // Breaks the case so that we can move on to the next option
                 }
-        
-                case 3: // This is if the user enters option 3, which sorts the selected numbers in ascending order
+                    
+                else
                 {
-                    if(third_option > 0)
-                    {  
-                        ascending_order(selectednumbers); // This function will return the array in order
+                    printf("\nYou must pick option 1 first\n"); // Error message if option 1 was not picked
+                    break;
+                }
+                    
+            }
+        
+            case 3: // This is if the user enters option 3, which sorts the selected numbers in ascending order
+            {
+                if(third_option > 0)
+                {  
+                    ascending_order(selectednumbers); // This function will return the array in order
                 
-                        printf("\nNumbers successfully sorted in order\n");
+                    printf("\nNumbers successfully sorted in order\n");
             
-                        break; // Required to break the case
-                    }
+                    break; // Required to break the case
+                }
                     
-                    else
-                    {
-                        printf("\nYou must pick option 1 first\n"); // Error message if option 1 was not picked
-                        break;
-                    }
-                }
-        
-                case 4: // This is if the user enters option 4, which compares the users numbers with the winning array.
+                else
                 {
-                    if(fourth_option > 0)
-                    {
-                        
-                        compare_numbers(winningnumbers,selectednumbers); // Function passes two arrays so that they can be compared
-                        break;
-                    }
-                    else
-                    {
-                        printf("\nYou must pick option 1 first\n"); // Error message if option 1 was not picked
-                        break;
-                    }
+                    printf("\nYou must pick option 1 first\n"); // Error message if option 1 was not picked
+                    break;
                 }
+            }
         
-                case 5: // This is if the user enters option 5, which counts the frequency of the numbers entered by the user.
+            case 4: // This is if the user enters option 4, which compares the users numbers with the winning array.
+            {
+                if(fourth_option > 0)
                 {
-                    if(fifth_option > 0)
-                    {
                         
-                        for(int i = 0; i < NUMBERS2; i++)
-                        {
-                            *(remembernumbers + i) = *(countnumbers+ i); // Copies the content of the array count numbers into the array remembernumbers. This is here so that the numbers entered by the user don't get overwritten each time the user enters new numbers
-                        }
+                    compare_numbers(winningnumbers,selectednumbers); // Function passes two arrays so that they can be compared
+                    break;
+                }
+                else
+                {
+                    printf("\nYou must pick option 1 first\n"); // Error message if option 1 was not picked
+                    break;
+                }
+            }
+        
+            case 5: // This is if the user enters option 5, which counts the frequency of the numbers entered by the user.
+            {
+                if(fifth_option > 0)
+                {
+                        
+                    for(int i = 0; i < NUMBERS2; i++)
+                    {
+                        *(remembernumbers + i) = *(countnumbers+ i); // Copies the content of the array count numbers into the array remembernumbers. This is here so that the numbers entered by the user don't get overwritten each time the user enters new numbers
+                    }
                 
-                        frequency_numbers(remembernumbers); // Returns the array of numbers that counts the frequency of the numbers entered
+                    frequency_numbers(remembernumbers); // Returns the array of numbers that counts the frequency of the numbers entered
             
-                        break;
-                    }
-                    
-                    else
-                    {
-                        printf("\nYou must pick option 1 first\n"); // Error message if option 1 was not picked
-                        break;
-                    }
+                    break;
                 }
-        
-                case 6: // This is if the user enters option 6, which will give the user a choice of whether they want to exit the program or return back to the main menu
+                    
+                else
                 {
+                    printf("\nYou must pick option 1 first\n"); // Error message if option 1 was not picked
+                    break;
+                }
+            }
+        
+            case 6: // This is if the user enters option 6, which will give the user a choice of whether they want to exit the program or return back to the main menu
+            {
     
-                    exit_program(&exit,&option); // Returns the option that the user picked in the function
+                exit_program(&exit,&option); // Returns the option that the user picked in the function
                 
-                    break;
-                }
+                break;
+            }
         
-                default: // This is if the user entered anything that is not within the range of 1-6. 
-                {
-                    printf("\nYou have not selected a number from the screen. Try again\n");
+            default: // This is if the user entered anything that is not within the range of 1-6. 
+            {
+                printf("\nYou have not selected a number from the screen. Try again\n");
             
-                    break;
-                }
+                break;
+            }
         
-            } // End switch statement
+        } // End switch statement
     } // End do
     
     while(option != 6); // Program will not end until option is 6
@@ -184,64 +182,51 @@ int main()
 /* Implement selected_numbers() function. This function will store six numbers in the array so that we can perform other tasks that this program contains
 */
 
-void selected_numbers(int *selectednumbers2, int *count_numbers, int *menu_option) // This function will return the selected numbers and the count of the numbers. This count will be used in order to calculate the frequency
+void selected_numbers(int *selectednumbers2, int *count_numbers, int *menu_option, int *second_option, int *third_option, int *fourth_option, int *fifth_option)
 {
+    printf("\nEnter six numbers of your choice from 1 to 42 inclusive: \n");
     
     for(int i = 0; i < NUMBERS; i++)
     {
         scanf("%d", & *(selectednumbers2 + i)); // Scans the number entered
-
-        *(count_numbers + *(selectednumbers2 + i)) = *(count_numbers + *(selectednumbers2 + i)) + 1; // The counts numbers gets incremented to find out the frequency of each of the numbers entered while the lotto game was being played
-       
-        
         if(*(selectednumbers2 + i) <= 0 || *(selectednumbers2 + i) > 42) // This is to error check if the number selected is less than or equal to 0 or greater than 42
         {
             printf("\nYou are not allowed to enter a number less than 1 and higher than 42. You are being redirected back to the main menu\n");
             
-            *menu_option = 1; // Return to main menu
+            *second_option = -1;
+            *third_option = -1;  
+            *fourth_option = -1; 
+            *fifth_option = -1;
+            for(int i = 0; i < NUMBERS; i++)
+            {
+                *(selectednumbers2 + i) = 0;
+            }
+        
+            *menu_option = 1;
             
             break; // Break statement and return to main menu
         }
-        
+
+        *(count_numbers + *(selectednumbers2 + i)) = *(count_numbers + *(selectednumbers2 + i)) + 1; // The counts numbers gets incremented to find out the frequency of each of the numbers entered while the lotto game was being played
         
     }
-
     for(int i = 0; i < NUMBERS; i++)
     {
         for(int j = i + 1; j < NUMBERS; j++)
         {
-            if(*(selectednumbers2 + i) == *(selectednumbers2 + j)) // If an element is the same as the element ahead, do this statement
+            if(*(selectednumbers2 + i) == *(selectednumbers2 + j) && *(selectednumbers2 + i) > 0)
             {
-                printf("You have repeated the number %d\nEnter your numbers again\n", *(selectednumbers2 + i)); // Prints out an error message that tells you that you have repeated a number 
-            }
-            
-        }
-        
-    }
-    
-    //This for loop will initialise all elements in the array with zeros. This will mean that the user will have to rewrite all his/her numbers
-    
-    for(int i = 0; i < NUMBERS; i++) 
-    {
-        for(int j = i + 1; j < NUMBERS; j++)
-        {
-            if(*(selectednumbers2 + i) == *(selectednumbers2 + j) || *(selectednumbers2 + i) <= 0 || *(selectednumbers2 + i) > 42) // If the number is equal to the next one
-            { // Set all elements to 0
-                
-                *(selectednumbers2 + 0) = 0;
-                *(selectednumbers2 + 1) = 0;
-                *(selectednumbers2 + 2) = 0;
-                *(selectednumbers2 + 3) = 0;
-                *(selectednumbers2 + 4) = 0;
-                *(selectednumbers2 + 5) = 0;
-                
-                
+                printf("%d was repeated. Enter the numbers again!\n", *(selectednumbers2 + i));
+                if(*second_option == 0 && *third_option == 0 && *fourth_option == 0 && *fifth_option == 0)
+                {    
+                    *second_option = -1;
+                    *third_option = -1;  
+                    *fourth_option = -1; 
+                    *fifth_option = -1;
+                }
             }
         }
     }
-    
-
-    
 }
 
 /* Implement display_numbers() function. This function will display the numbers that the user has entered. 
