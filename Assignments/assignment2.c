@@ -208,7 +208,7 @@ void selected_numbers(int *selectednumbers2, int *count_numbers, int *menu_optio
         }
         else
         {
-            *(count_numbers + *(selectednumbers2 + i)) = *(count_numbers + *(selectednumbers2 + i)) + 1; // The counts numbers gets incremented to find out the frequency of each of the numbers entered while the lotto game was being played
+            *(count_numbers + *(selectednumbers2 + i)) = *(count_numbers + *(selectednumbers2 + i)) + 1;
         }
     }
     for(int i = 0; i < NUMBERS; i++)
@@ -218,13 +218,11 @@ void selected_numbers(int *selectednumbers2, int *count_numbers, int *menu_optio
             if(*(selectednumbers2 + i) == *(selectednumbers2 + j) && *(selectednumbers2 + i) > 0)
             {
                 printf("%d was repeated. Enter the numbers again!\n", *(selectednumbers2 + i));
-                if(*second_option == 0 && *third_option == 0 && *fourth_option == 0 && *fifth_option == 0)
-                {    
-                    *second_option = -1;
-                    *third_option = -1;  
-                    *fourth_option = -1; 
-                    *fifth_option = -1;
-                }
+                *second_option = -1;
+                *third_option = -1;  
+                *fourth_option = -1; 
+                *fifth_option = -1;
+                *(count_numbers + *(selectednumbers2 + i)) = 0;
             }
         }
     }
