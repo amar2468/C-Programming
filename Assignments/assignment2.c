@@ -2,7 +2,7 @@
     choose which option they want to pick. Once the user selects the option to enter their preferred numbers, the numbers will be shown onto the screen from the smallest to the highest. Then the program will compare these selected numbers with the 
     winning numbers and will output a message, which tells the user which prize they have won.
     Author: Amar Plakalo
-    Date: 23 February 2020, updated 08/03/2020
+    Date: 23 February 2020, updated 01/12/2020
     Used Borland Compiler on Windows 10
 */
 
@@ -24,7 +24,7 @@
     
     void frequency_numbers(int*); // Function which counts how many times a number was entered without exiting the program
 
-    void exit_program(int*, int*); // Function that quits the program or redirects user back to menu.
+    void exit_program(int*,int*); // Function that quits the program or redirects user back to menu.
     
 
 int main()
@@ -62,7 +62,12 @@ int main()
         printf("\n6.Exit\n");
     
         scanf("%d", &option); // Records the option that the user picked
- 
+        int ch;
+        if( ( ch = getchar() ) != '\n' && ch != EOF )
+        {
+            printf("Incorrect number entered\n");
+            option = 0;
+        }
         
         switch(option) // This switch will be made up of six cases that represent the six menu choices. Each case will perform the specific menu option that the user chooses
         {
@@ -83,8 +88,6 @@ int main()
             {
                 if(second_option > 0)
                 {
-                    printf("\nThese are the numbers that you have selected: \n");
-            
                     display_numbers(selectednumbers); // The numbers entered in option 1 will be returned to this function and displayed to screen
             
                     break; // Breaks the case so that we can move on to the next option
@@ -103,8 +106,6 @@ int main()
                 if(third_option > 0)
                 {  
                     ascending_order(selectednumbers); // This function will return the array in order
-                
-                    printf("\nNumbers successfully sorted in order\n");
             
                     break; // Required to break the case
                 }
@@ -120,7 +121,6 @@ int main()
             {
                 if(fourth_option > 0)
                 {
-                        
                     compare_numbers(winningnumbers,selectednumbers); // Function passes two arrays so that they can be compared
                     break;
                 }
@@ -206,9 +206,10 @@ void selected_numbers(int *selectednumbers2, int *count_numbers, int *menu_optio
             
             break; // Break statement and return to main menu
         }
-
-        *(count_numbers + *(selectednumbers2 + i)) = *(count_numbers + *(selectednumbers2 + i)) + 1; // The counts numbers gets incremented to find out the frequency of each of the numbers entered while the lotto game was being played
-        
+        else
+        {
+            *(count_numbers + *(selectednumbers2 + i)) = *(count_numbers + *(selectednumbers2 + i)) + 1; // The counts numbers gets incremented to find out the frequency of each of the numbers entered while the lotto game was being played
+        }
     }
     for(int i = 0; i < NUMBERS; i++)
     {
@@ -234,7 +235,8 @@ void selected_numbers(int *selectednumbers2, int *count_numbers, int *menu_optio
 
 void display_numbers(int *displaynumbers) // This function will return the output of the numbers selected
 {
-    
+    printf("\nThese are the numbers that you have selected: \n");
+        
     for(int i = 0; i < NUMBERS; i++)
     {
         printf("%d\n", *(displaynumbers + i)); // Prints each element of the array
@@ -268,6 +270,8 @@ void ascending_order(int *ascendingorder) // This function will return a sorted 
         } 
     }
     
+    printf("\nNumbers successfully sorted in order\n");
+    
 }
 
 /* Implement compare_numbers() function. This function will compare the numbers that the user entered with the winning numbers. 
@@ -297,30 +301,30 @@ void compare_numbers(int *winnumbers,int *enterednumbers) // This function will 
         printf("%d\n", *(enterednumbers + i));
     }
         
-        if(score == 6) //If all of the users numbers match all of the winning numbers, this will be displayed
-        {
-            printf("\nYou have received the Jackpot. Congrats!\n");
-        }   
+    if(score == 6) //If all of the users numbers match all of the winning numbers, this will be displayed
+    {
+        printf("\nYou have received the Jackpot. Congrats!\n");
+    }   
         
-        else if(score == 5) //If five of the users numbers match five of the winning numbers, this will be displayed
-        {
-            printf("\nYou have received a new car. Congrats!\n");
-        }
+    else if(score == 5) //If five of the users numbers match five of the winning numbers, this will be displayed
+    {
+        printf("\nYou have received a new car. Congrats!\n");
+    }
         
-        else if(score == 4) // If four of the users numbers match four of the winning numbers, this will be displayed
-        {
-            printf("\nYou have received a weekend away. Congrats\n");
-        }
+    else if(score == 4) // If four of the users numbers match four of the winning numbers, this will be displayed
+    {
+        printf("\nYou have received a weekend away. Congrats\n");
+    }
         
-        else if(score == 3) // If three of the users numbers match three of the winning numbers, this will be displayed
-        {
-            printf("\nYou have received a cinema pass. Congrats\n");
-        }
+    else if(score == 3) // If three of the users numbers match three of the winning numbers, this will be displayed
+    {
+        printf("\nYou have received a cinema pass. Congrats\n");
+    }
         
-        else // This will be printed if the user did not win any prize
-        {
-            printf("\nYou have not won a prize.\n");
-        }
+    else // This will be printed if the user did not win any prize
+    {
+        printf("\nYou have not won a prize.\n");
+    }
         
         
     
@@ -346,31 +350,31 @@ void frequency_numbers(int *remember_numbers) // This will return to main() the 
 /*  Implement exit_program() function. This function will either quit the program for the user or redirect him/her to the main menu, depending on their choice.
 */
 
-void exit_program(int *choice, int *menuoption) // This function returns the choice that the user made. It also returns to menu if the user wants to play the lotto game again
+void exit_program(int *choice,int *menu_option) // This function returns the choice that the user made. It also returns to menu if the user wants to play the lotto game again
 {
     printf("\nAre you sure that you want to quit this program? If so, press the number 6 again. If you wish to return to main menu, press 1 \n");
     scanf("%d", & *choice);
     getchar();
     
-    if(*choice == 6) // If user presses six when asked do they want to exit program
+    switch(*choice)
     {
-        printf("\nThanks for playing! Press enter to exit\n");
+        case 1:
+        {
+            printf("You are returning back to the main menu\n");
+            *menu_option = 1;
+        }
+        case 6:
+        {
+            printf("Thanks for playing. Bye!\n");
+            break;
+        }
         
-    }
-    
-    else if(*choice == 1) // If user presses one when asked do they want to exit program
-    {
-        printf("\nYou are now returning to the main menu. Good luck!\n");
-        
-        *menuoption = 1;
+        default:
+        {
+            printf("The option entered is not one that was specified. The program will return back to the main menu\n");
+            *menu_option = 1;
             
-    }
-    
-    else // If the user does not choose 1 or 6
-    {
-        printf("\nReturning to the main menu\n");
-        
-        return;
+        }
     }
 
 }
