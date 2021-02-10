@@ -16,4 +16,3 @@ The class projects are:
 
 My personal projects are:
 1. SimpleBanking.c
-2. Calculator.c 
