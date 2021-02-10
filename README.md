@@ -11,6 +11,8 @@ The class projects are:
 2. LottoGame.c
 3. EncryptionDecryption.c
 4. WorkingWithArrays.c
+5. CurrencyConversion.c
+6. FibonnaciSequence.c
 
 My personal projects are:
 1. SimpleBanking.c
