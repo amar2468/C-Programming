@@ -1,2 +1,4 @@
 # C-Programming
-All assignments are here
+
+This repository contains both class projects and my
+own coding projects. 
