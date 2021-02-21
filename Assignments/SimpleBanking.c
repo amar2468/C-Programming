@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+# define SIZE 5
+
 
 int main()
 {
@@ -20,11 +22,16 @@ int main()
     int log_on = 0;
     int acc_number = 0;
     int pin_entered = 0;
+    int index_deposit = 0;
+    int index_withdraw = 0;
+    float previous_deposits[SIZE];
+    float previous_withdraws[SIZE];
     srand(time(0));
     int account_number = (rand() % (99999-10000 + 1)) + 10000;
     int pin = (rand() % (9999-1000 + 1)) + 1000;
     int counter = 1;
-    char name,logout;
+    char logout;
+    char name[20];
     float cashdeposit,cashwithdraw,accountbalance;
     
     
@@ -166,9 +173,9 @@ while (counter == 1)
         
         case 3: // Cash deposit
         {
-            if(option_1_completed == 1)
+            if(option_1_completed == 1 && log_on == 1)
             {
-                printf("\nHow much cash do you wish to deposit in your newly created bank account? \n");
+                printf("\nHow much cash do you wish to deposit? \n");
                 scanf("%f", &cashdeposit);
                 if (cashdeposit < 0)
                 {
@@ -183,6 +190,14 @@ while (counter == 1)
                     printf("\nTo confirm, You have chosen to deposit %f into your bank account\n", cashdeposit);
                     printf("\n-----------------------------------------------------------------------------\n");
                     accountbalance = accountbalance + cashdeposit;
+                    previous_deposits[index_deposit] = cashdeposit;
+                    index_deposit++;
+                    if(index_deposit == 5)
+                    {
+                        index_deposit = 0;
+                        break;
+                    }
+                    
                     break;
                 }
             }
@@ -194,11 +209,16 @@ while (counter == 1)
                 option_1_completed = 0;
                 break;
             }
+            else if(option_1_completed == 1 && log_on == 0)
+            {
+                printf("You haven't logged on - cannot deposit\n");
+                break;
+            }
         }
         
         case 4: // Cash withdrawal
         {
-            if(option_1_completed == 1)
+            if(option_1_completed == 1 && log_on == 1)
             {
                 printf("\nHow much money do you want to withdraw from your account?\n");
                 scanf("%f", &cashwithdraw);
@@ -215,15 +235,27 @@ while (counter == 1)
                     printf("\nTo confirm, You wish to withdraw %f from your account\n", cashwithdraw);
                     printf("\n-------------------------------------------------------------------\n");
                     accountbalance = accountbalance - cashwithdraw;
+                    previous_withdraws[index_withdraw] = cashwithdraw;
+                    index_withdraw++;
+                    if (index_withdraw == 5)
+                    {
+                        index_withdraw = 0;
+                        break;
+                    }
                     break;
                 }
             }
-            else if(option_1_completed == 0)
+            else if(option_1_completed == 0 && log_on == 0)
             {
                 printf("\n-----------------------------------------------------------\n");
                 printf("You cannot withdraw money - You have not created an account: \n");
                 printf("\n-----------------------------------------------------------\n");
                 option_1_completed = 0;
+                break;
+            }
+            else if(option_1_completed == 1 && log_on == 0)
+            {
+                printf("You have not logged in - cannot withdraw\n");
                 break;
             }
         }
@@ -232,12 +264,23 @@ while (counter == 1)
         
         case 5: // Display account information
         {
-            if(option_1_completed == 1)
+            if(option_1_completed ==  1 && log_on == 1)
             {
                 printf("\n------------------------------------------\n");
-                printf("\nYour account balance is %f\n", accountbalance);
-                printf("\nAmount deposited: %f\n", cashdeposit);
-                printf("\nAmount withdrawn: %f\n", cashwithdraw);
+                printf("\nAccount Name - %s\n",name);
+                printf("\nYour account balance - %f\n", accountbalance);
+                printf("\nPrevious deposits - \n");
+                for(int i = 0; i < index_deposit; i++)
+                {
+                    printf("%f,",previous_deposits[i]);
+                }
+
+                printf("\n");
+                printf("\nPrevious withdraws - \n");
+                for(int i = 0; i < index_withdraw; i++)
+                {
+                    printf("%f,",previous_withdraws[i]);
+                }
                 printf("\n------------------------------------------\n");
             
                 break;
