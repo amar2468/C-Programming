@@ -1,4 +1,4 @@
-/*  Program that allows user to create an account, log on, deposit money, withdraw money, display information and log off.
+/*  Program that allows user to create an account, log on, deposit money, withdraw money,pay for a bill, display information and log off.
     This is a simple banking app that a user can use to easily.
     
     
@@ -20,12 +20,17 @@ int main()
     
     int option,age,option_1_completed = 0;
     int log_on = 0;
+    int company_acc_no = 0;
+    int verify_my_acc_no = 0;
     int acc_number = 0;
     int pin_entered = 0;
     int index_deposit = 0;
     int index_withdraw = 0;
     float previous_deposits[SIZE];
     float previous_withdraws[SIZE];
+    float bill_total = 0;
+    char message[100];
+
     srand(time(0));
     int account_number = (rand() % (99999-10000 + 1)) + 10000;
     int pin = (rand() % (9999-1000 + 1)) + 1000;
@@ -44,9 +49,10 @@ while (counter == 1)
     printf("\n2.Log into account: \n");
     printf("\n3.Cash Deposit: \n");
     printf("\n4.Cash Withdrawal: \n");
-    printf("\n5.Display account information: \n");
-    printf("\n6.Logout\n");
-    printf("\n7.Clear output screen and display available options\n");
+    printf("\n5.Pay a bill: \n");
+    printf("\n6.Display account information: \n");
+    printf("\n7.Logout\n");
+    printf("\n8.Clear output screen and display available options\n");
     
     scanf("%d", &option);
     
@@ -63,7 +69,6 @@ while (counter == 1)
                 printf("\nHow old are you?\n");
                 scanf("%d", &age);
                 getchar();
-                printf("%d",age);
                 if(age < 18)
                 {
                     printf("\n------------------------------------------------------------------------\n");
@@ -260,9 +265,70 @@ while (counter == 1)
             }
         }
 
+        case 5: // Pay a bill
+        {
+            if(log_on == 1)
+            {
+                printf("\nEnter the account number of the company: \n");
+                scanf("%d",&company_acc_no);
+                getchar();
+                printf("\nEnter the bill amount that you are due to pay: \n");
+                scanf("%f",&bill_total);
+                if(accountbalance - bill_total >= 0)
+                {
+
+                    printf("\nWrite a short note, e.g. This is my payment for the electricity bill: \n");
+                    getchar();
+                    gets(message);
+
+                    printf("\nEnter your account number to verify that this is you: \n");
+                    scanf("%d", &verify_my_acc_no);
+
+
+                    if (verify_my_acc_no == account_number)
+                    {
+                        printf("\n-------------------------\n");
+                        printf("\nSuccessful transaction!!!\n");
+                        accountbalance = accountbalance - bill_total;
+                        previous_withdraws[index_withdraw] = bill_total;
+                        index_withdraw++;
+                        if (index_withdraw == 5)
+                        {
+                            index_withdraw = 0;
+                            break;
+                        }
+                        
+                        printf("\n-------------------------\n");
+                        break;
+                    }
+                    else
+                    {
+                        printf("\n----------------------------------\n");
+                        printf("\nIncorrect account number entered: \n");
+                        printf("\n----------------------------------\n");
+                        break;
+                    }
+                }
+                else if(accountbalance - bill_total < 0)
+                {
+                    printf("\n---------------------------------------------------------------\n");
+                    printf("You cannot pay for the bill - The account balance will go under 0: ");
+                    printf("\n---------------------------------------------------------------\n");
+                    break;
+                }
+            }
+            else if(log_on == 0)
+            {
+                printf("\n--------------------------------------------\n");
+                printf("You cannot pay a bill - You have not logged on: ");
+                printf("\n--------------------------------------------\n");
+                break;
+            }
+        }
+
     
         
-        case 5: // Display account information
+        case 6: // Display account information
         {
             if(option_1_completed ==  1 && log_on == 1)
             {
@@ -295,7 +361,7 @@ while (counter == 1)
             }
         }
         
-        case 6: // Logout
+        case 7: // Logout
         {
             if(option_1_completed == 1 && log_on == 1)
             { 
@@ -342,7 +408,7 @@ while (counter == 1)
             }
         }
         
-        case 7: // Clear output and display available options
+        case 8: // Clear output and display available options
         {
             system("cls");
             break;
