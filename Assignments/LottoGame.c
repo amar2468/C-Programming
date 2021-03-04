@@ -256,13 +256,13 @@ void ascending_order(int *ascendingorder) // This function will return a sorted 
     for(int i = 1; i < NUMBERS; i++)
     {
         j = i;
-        while(*(ascendingorder + (i-1)) > *(ascendingorder + j)  && i > 0) // If the number is less than the previous number, execute this statement
+        while(*(ascendingorder + (i-1)) > *(ascendingorder + j)  && i > 0) // if the element in the position (i-1) is greater than the element ahead
         {
-            temp = *(ascendingorder + i); // Store the smaller number in the variable temp
+            temp = *(ascendingorder + i); // put the element ahead into a temp variable
                 
-            *(ascendingorder + i) = *(ascendingorder + (i-1)); // Store the greater value in the position ahead
+            *(ascendingorder + i) = *(ascendingorder + (i-1)); // swap the order of the elements so that the one behind is now the one ahead
                 
-            *(ascendingorder + (i-1)) = temp; // Store the smaller value in the position behind
+            *(ascendingorder + (i-1)) = temp; // take the one that was ahead and put it behind
             i = i-1;
             j = j-1;
         } 
