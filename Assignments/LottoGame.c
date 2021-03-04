@@ -2,8 +2,8 @@
     choose which option they want to pick. Once the user selects the option to enter their preferred numbers, the numbers will be shown onto the screen from the smallest to the highest. Then the program will compare these selected numbers with the 
     winning numbers and will output a message, which tells the user which prize they have won.
     Author: Amar Plakalo
-    Date: 23 February 2020, updated 01/12/2020
-    Used Borland Compiler on Windows 10
+    Date: 23 February 2020, updated 04/03/2021
+    Used Visual Studio Code on Windows 10
 */
 
 #include <stdio.h>
@@ -249,22 +249,22 @@ void display_numbers(int *displaynumbers) // This function will return the outpu
 void ascending_order(int *ascendingorder) // This function will return a sorted array back to main()
 {
     int temp; // Temporary variable that is used to store the current number in the array
+    int j = 0;
 
-
+    // Insertion Sort is the sorting algorithm used below
     
-    for(int i = 0; i < NUMBERS; i++)
+    for(int i = 1; i < NUMBERS; i++)
     {
-        for(int j = i + 1; j < NUMBERS; j++)
+        j = i;
+        while(*(ascendingorder + (i-1)) > *(ascendingorder + j)  && i > 0) // If the number is less than the previous number, execute this statement
         {
-            if(*(ascendingorder + j) < *(ascendingorder + i)) // If the number is less than the previous number, execute this statement
-            {
-                temp = *(ascendingorder + j); // Store the smaller number in the variable temp
+            temp = *(ascendingorder + i); // Store the smaller number in the variable temp
                 
-                *(ascendingorder + j) = *(ascendingorder + i); // Store the greater value in the position ahead
+            *(ascendingorder + i) = *(ascendingorder + (i-1)); // Store the greater value in the position ahead
                 
-                *(ascendingorder + i) = temp; // Store the smaller value in the position behind
-            
-            }
+            *(ascendingorder + (i-1)) = temp; // Store the smaller value in the position behind
+            i = i-1;
+            j = j-1;
         } 
     }
     
