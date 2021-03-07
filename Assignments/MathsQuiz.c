@@ -1,7 +1,7 @@
 /* Program that will simulate a mathematics quiz game
     Author: Amar Plakalo
-    Date: 7 November 2019
-    Used Borland Compiler on Windows 10
+    Date: 7 November 2019 updated 07/03/2021
+    Used Visual Studio Code on Windows 10
 */
 
 #include <stdio.h>
@@ -20,10 +20,11 @@ int main()
     int correct = 0;
     int incorrect = 0;
     int questions = 0;
+    int counter = 1;
 
     
     // Built a menu which will be displayed when this program is run
-    do
+    while(counter == 1)
     { // Do statement is here so that the program repeats itself numerous times rather than running just once.       
         
         printf("Main Menu: \n");
@@ -67,6 +68,7 @@ int main()
             case 4:
             {
                 printf("Thanks for playing this quiz. See you again\n");
+                counter = 0;
                 break;
             }
             default:
@@ -76,8 +78,6 @@ int main()
             }
         }
     }
-
-    while(option != 4 ); // This means that whenever option 1 is selected, the program will begin from the start.
  
         getchar(); // Double getchar(); is here so that the program does not crash.
         getchar();
@@ -115,7 +115,6 @@ int start_quiz(int *no_of_qs,int *correct,int *incorrect)
         }
     
     }
-    return *correct,*incorrect;
         
 }
 
@@ -137,7 +136,6 @@ int display_correct_incorrect(int *correct,int *incorrect)
         *incorrect = 0;
     }
     
-    return *correct,*incorrect;
 
         
 }
