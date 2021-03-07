@@ -1,7 +1,8 @@
-/* Program that lets you pick the currency between euro and dollar and converts it to either euro or dollar, depending on which one you picked. 
-   After selecting a currency, you will be asked to enter three amounts into a floating-point array
-   Author: Amar plakalo
-   Date: 20 February 2020
+/*  Program that lets you pick the currency between euro and dollar and converts it to either euro or dollar, depending on which one you picked.
+    After selecting a currency, you will be asked to enter three amounts into a floating-point array
+    Author: Amar plakalo
+    Used Visual Studio Code on Windows 10
+    Date: 20 February 2020 updated 07/03/2021
 */
 
 #include <stdio.h>
