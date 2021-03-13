@@ -22,6 +22,8 @@ Option 6 allows the user to see their relevant information about their account. 
 
 In option 7, the user can log off. If they have completed option 1 and they are logged on, they will then be asked whether they wish to log off. If they choose 'y' or 'Y', the user will log off. If they insert 'n' or 'N', they will return back to menu. Otherwise, they return back to menu. If they have completed option 1 but have not logged in, an error message saying that they did not log in will be presented. If they have not completed option 1 and have not logged in, the error message will say that they have not registered. 
 
-If the user chooses option 8, the screen will clear. This is for visibility so that the user can clear the screen if there is too much unnecessary information.
+If the user chose option 8, the user can exit the program. If the user types in "8", the program will exit. Otherwise, if they click any other button, the program will return back to the main menu. 
+
+If the user chooses option 9, the screen will clear. This is for visibility so that the user can clear the screen if there is too much unnecessary information.
 
 Finally, if the user did not select any of the options from 1-8, they will be returned back to the menu to decide which option they want to execute.
