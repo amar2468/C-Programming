@@ -1,6 +1,6 @@
 /* Program that will simulate a mathematics quiz game
     Author: Amar Plakalo
-    Date: 7 November 2019 updated 07/03/2021
+    Date: 7 November 2019 updated 13/03/2021
     Used Visual Studio Code on Windows 10
 */
 
@@ -21,6 +21,7 @@ int main()
     int incorrect = 0;
     int questions = 0;
     int counter = 1;
+    int option1 = 0;
 
     
     // Built a menu which will be displayed when this program is run
@@ -36,6 +37,14 @@ int main()
        
         scanf("%d", &option);
     
+        int ch;
+        if( ( ch = getchar() ) != '\n' && ch != EOF )
+        {
+            printf("Incorrect Option!\n");
+            correct = 0;
+            incorrect = 0;
+            option = 0;
+        }
     
         switch(option)
         {
@@ -43,20 +52,38 @@ int main()
             {
                 printf("Input the number of questions to be asked:\n");
                 scanf("%d", &questions);
-                
+
+
                 while(questions > 5)
                 {
                     printf("You cannot enter more than five questions. Try again: \n");
+                    option1 = 0;
                     scanf("%d", &questions);
+                    if( ( ch = getchar() ) != '\n' && ch != EOF )
+                    {
+                        printf("Incorrect Option!\n");
+                        option1 = 0;
+           
+                    }
+
                 }
-                break;
+                option1 = 1;
+                
             }
             
             case 2:
             {
-                printf("GOOD LUCK !!!\n");
-                start_quiz(&questions,&correct,&incorrect);
-                break;
+                if (option1 == 1)
+                {
+                    printf("GOOD LUCK !!!\n");
+                    start_quiz(&questions,&correct,&incorrect);
+                    break;
+                }
+                else
+                {
+                    printf("You cannot complete option 2 because you have not done option 1 yet. Do it first!! ");
+                    break;
+                }
             }
             
             case 3:
