@@ -102,7 +102,7 @@ while (counter == 1)
                 else if(accountbalance > 0)
                 {
                     printf("\n--------------------------------------------------------------------\n");
-                    printf("You successfully put %.2f into your account. Well done!!!\n",accountbalance);
+                    printf("You successfully put %.2f EUR into your account. Well done!!!\n",accountbalance);
                     option_1_completed = 1;
                     printf("Your account number is : %d\n",account_number);
                     printf("Your PIN is %d. Keep this safe!!\n",pin);
@@ -192,7 +192,7 @@ while (counter == 1)
                 else if(cashdeposit > 0)
                 {
                     printf("\n-----------------------------------------------------------------------------\n");
-                    printf("\nTo confirm, You have chosen to deposit %.2f into your bank account\n", cashdeposit);
+                    printf("\nTo confirm, You have chosen to deposit %.2f EUR into your bank account\n", cashdeposit);
                     printf("\n-----------------------------------------------------------------------------\n");
                     accountbalance = accountbalance + cashdeposit;
                     previous_deposits[index_deposit] = cashdeposit;
@@ -230,14 +230,14 @@ while (counter == 1)
                 if(accountbalance < 0)
                 {
                     printf("\n---------------------------------------------------------------------------------\n");
-                    printf("You cannot withdraw the money from the account because the balance is less than 0: \n");
+                    printf("You cannot withdraw the money from the account because the balance is less than 0 EUR: \n");
                     printf("\n---------------------------------------------------------------------------------\n");
                     break;
                 }
                 else if(accountbalance > 0)
                 {
                     printf("\n-------------------------------------------------------------------\n");
-                    printf("\nTo confirm, You wish to withdraw %.2f from your account\n", cashwithdraw);
+                    printf("\nTo confirm, You wish to withdraw %.2f EUR from your account\n", cashwithdraw);
                     printf("\n-------------------------------------------------------------------\n");
                     accountbalance = accountbalance - cashwithdraw;
                     previous_withdraws[index_withdraw] = cashwithdraw;
@@ -312,7 +312,7 @@ while (counter == 1)
                 else if(accountbalance - bill_total < 0)
                 {
                     printf("\n---------------------------------------------------------------\n");
-                    printf("You cannot pay for the bill - The account balance will go under 0: ");
+                    printf("You cannot pay for the bill - The account balance will go under 0 EUR: ");
                     printf("\n---------------------------------------------------------------\n");
                     break;
                 }
@@ -334,7 +334,7 @@ while (counter == 1)
             {
                 printf("\n------------------------------------------\n");
                 printf("\nAccount Name - %s\n",name);
-                printf("\nYour account balance - %.2f\n", accountbalance);
+                printf("\nYour account balance - %.2f EUR\n", accountbalance);
                 printf("\nPrevious deposits - \n");
                 for(int i = 0; i < index_deposit; i++)
                 {
