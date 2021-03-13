@@ -3,8 +3,8 @@ then the user is displayed a message which says that the code entered was correc
 code is incorrect will be displayed to screen. The number of times a code was guessed correctly and incorrectly will be displayed to screen.
 The user also has an option to decrypt the encrypted code.
 Author: Amar Plakalo
-Used Visual Studio Code with minGW Compiler
-Date: 22 April 2020
+Used Visual Studio Code on Windows 10
+Date: 22 April 2020 updated 13/03/2021
 */
 
 #include <stdio.h>
@@ -34,7 +34,7 @@ void decrypt_code(int*); // This function will decrypt the encrypted code entere
 
 void correct_incorrect(int*,int*); // This function will count the number of correct and incorrect times a code was entered
 
-void exit_program(int*); // This function will ask the user whether they want to exit from the program or return to main menu
+int exit_program(); // This function will ask the user whether they want to exit from the program or return to main menu
 
 int main()
 { // Begin main()
@@ -53,8 +53,10 @@ int main()
     int third_option = 0; // The third option is set to 0 so that the user does not pick option any option at the start apart from option 1,5,6
 
     int fourth_option = 0; // The fourth option is set to 0 so that the user does not pick option any option at the start apart from option 1,5,6
+    
+    int counter = 1;
 
-    do // This do while loop will execute the main menu at least once. It will execute many more times if the while condition is true
+    while(counter == 1)
     {
         printf("\nMain Menu\n");
         printf("\n1.Enter a code or generate a random code\n");
@@ -137,8 +139,18 @@ int main()
 
             case 6: // Menu option 6 will run the exit_program function which will ask the user whether they want to exit from the program.
             { // Begin case 6
-                exit_program(&option); // Call function exit_program which will ask user if they want to exit from program
-
+                int new_counter;
+                new_counter = exit_program(); // Call function exit_program which will ask user if they want to exit from program
+                if (new_counter == 1)
+                {
+                    counter = 1;
+                    break;
+                }
+                else if(new_counter == 0)
+                {
+                    counter = 0;
+                    break;
+                }
                 break; // End
             } // End case 6
 
@@ -149,9 +161,7 @@ int main()
                 break;
             } // End default
         } // End switch statement
-    } // End do statement
-
-    while(option != 6); // Program will run until option is not equal to 6
+    }
 
     getchar(); // This ensures that the program does not crash
     return 0;
@@ -319,28 +329,23 @@ void correct_incorrect(int *correct_attempts,int *incorrect_attempts) // This fu
     printf("\nThe number of incorrect attempts is %d\n", person.wrong_code); // Prints amount of wrong attempts by user
 } // End correct_incorrect() function
 
-void exit_program(int *menu_option) // This function will ask the user whether they want to quit the program
+int exit_program() // This function will ask the user whether they want to quit the program
 { // Begin exit_program()
-    if(*menu_option == 6) // If the menu_option chosen was number 6
-    { // Begin if statement
-        printf("\nDo you wish to exit this program? If yes, press 6. If no, press 1\n"); // Asks user whether they really want to quit
-        scanf("%d", & *menu_option); // Records users response
+    int returned_counter = 0;
+    int answer_to_exit;
+    printf("Do you want to exit the program? If yes, type the number 6. Otherwise, type the number 1:");
+    scanf("%d",&answer_to_exit);
+    getchar();
+    if(answer_to_exit == 6) // If the user chooses 6
+    {
+        returned_counter = 0; // this will be returned and the while loop will not execute, meaning that the program ends
+        return returned_counter; // return the value
+    }
+    else if(answer_to_exit == 1) // If user chooses 1
+    {
+        printf("Back to menu: "); 
+        returned_counter = 1; // allows the user to user the program again if they want
+        return returned_counter; // returns value
+    }
 
-        if(*menu_option == 6) // If user entered 6 again
-        { // Begin if statement
-            printf("\nYou have chosen to exit the program. Goodbye!\n"); // Goodbye message to the user
-        } // End if statement
-
-        else if(*menu_option == 1) // If option 1 is selected instead of option 6
-        { // Begin else if
-            printf("\nYou have chosen to return to main menu\n"); // Message tells user that they will be returned to main menu
-            return; // Returns user to main menu
-        } // End else if
-
-        else // If none of these options is chosen
-        { // Begin else
-            printf("\nIncorrect option chosen. Choose again\n"); // Tells user to choose a different option
-            scanf("%d", & *menu_option); // Scans the option and records it into the *menu_option variable
-        } // End else
-    } // End if statement
 } // End exit_program() function
