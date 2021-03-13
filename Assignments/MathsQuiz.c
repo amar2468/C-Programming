@@ -22,6 +22,7 @@ int main()
     int questions = 0;
     int counter = 1;
     int option1 = 0;
+    int option2 = 0;
 
     
     // Built a menu which will be displayed when this program is run
@@ -68,20 +69,30 @@ int main()
 
                 }
                 option1 = 1;
+                option2 = 0;
+                correct = 0;
+                incorrect = 0;
+                break;
                 
             }
             
             case 2:
             {
-                if (option1 == 1)
+                if (option1 == 1 && option2 == 0)
                 {
                     printf("GOOD LUCK !!!\n");
                     start_quiz(&questions,&correct,&incorrect);
+                    option2 = 1;
                     break;
                 }
-                else
+                else if(option1 == 0)
                 {
                     printf("You cannot complete option 2 because you have not done option 1 yet. Do it first!! ");
+                    break;
+                }
+                else if(option2 == 1)
+                {
+                    printf("\nOption2 is has already been executed. You need to option 1 first before executing option 2 again.\n");
                     break;
                 }
             }
