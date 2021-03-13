@@ -1,10 +1,10 @@
-/*  Program that allows user to create an account, log on, deposit money, withdraw money,pay for a bill, display information and log off.
+/*  Program that allows user to create an account, log on, deposit money, withdraw money,pay a bill, display information and log off.
     This is a simple banking app that a user can use to easily.
     
     
     ****************************This is my personal project that I did***********************************
     Author: Amar Plakalo
-    Date - Updated: 21 February 2021
+    Date - Updated: 13 March 2021 
 */
 
 #include <stdio.h>
@@ -52,7 +52,8 @@ while (counter == 1)
     printf("\n5.Pay a bill: \n");
     printf("\n6.Display account information: \n");
     printf("\n7.Logout\n");
-    printf("\n8.Clear output screen and display available options\n");
+    printf("\n8.Exit Program\n");
+    printf("\n9.Clear output screen and display available options\n");
     
     scanf("%d", &option);
     
@@ -88,9 +89,6 @@ while (counter == 1)
 
                 printf("\n----------------------------------------------\n");
 
-                printf("Your account number is : %d\n",account_number);
-                printf("Your PIN is %d. Keep this safe!!\n",pin);
-
                 if(accountbalance < 0)
                 {
                     printf("\n------------------------------------------------------------------------------\n");
@@ -105,8 +103,10 @@ while (counter == 1)
                 {
                     printf("\n--------------------------------------------------------------------\n");
                     printf("You successfully put %f into your account. Well done!!!\n",accountbalance);
-                    printf("\n--------------------------------------------------------------------\n");
                     option_1_completed = 1;
+                    printf("Your account number is : %d\n",account_number);
+                    printf("Your PIN is %d. Keep this safe!!\n",pin);
+                    printf("\n--------------------------------------------------------------------\n");
                     break;
                 }
             
@@ -267,7 +267,7 @@ while (counter == 1)
 
         case 5: // Pay a bill
         {
-            if(log_on == 1)
+            if(option_1_completed == 1  && log_on == 1)
             {
                 printf("\nEnter the account number of the company: \n");
                 scanf("%d",&company_acc_no);
@@ -351,7 +351,7 @@ while (counter == 1)
             
                 break;
             }
-            else if(option_1_completed == 0)
+            else if(option_1_completed == 0 || log_on == 0)
             {
                 printf("\n----------------------------------------------------------------------------------\n");
                 printf("You cannot display information about the account - You have not created an account: \n");
@@ -408,9 +408,32 @@ while (counter == 1)
             }
         }
         
-        case 8: // Clear output and display available options
+        case 8: // Exit Program
         {
-            system("cls");
+            int exit_program_option = 0;
+            printf("Do you want to exit this program? If yes, choose number 8. Otherwise, press any other button to return back to the menu: ");
+            scanf("%d",&exit_program_option);
+            if (exit_program_option == 8) // if the user chose 8
+            {
+                printf("\n-----------------------------------------------------------------------\n");
+                printf("\nThanks for using this app!!! Press any button and you're done!! Goodbye!!");
+                printf("\n-----------------------------------------------------------------------\n");
+                counter = 0; // this will stop the while loop from executing, which ends the program.
+                break;
+            }
+            else
+            {
+                printf("\n--------------------\n");
+                printf("Back to the main menu!");
+                printf("\n--------------------\n");
+                counter = 1; // this will let the while loop continue running as normal.
+                break;
+            }
+        }
+
+        case 9: // Clear output and display available options
+        {
+            system("cls"); // clears the screen for visibilty purposes
             break;
         }
         default:
