@@ -1,8 +1,10 @@
-/* This is a program that will play the lotto game. It will allow the user to enter six numbers of their choice and give them a set of options, each performing a specific requirement. This program will display a simple menu to the user and the user will
-    choose which option they want to pick. Once the user selects the option to enter their preferred numbers, the numbers will be shown onto the screen from the smallest to the highest. Then the program will compare these selected numbers with the 
-    winning numbers and will output a message, which tells the user which prize they have won.
+/*  This is a program that will play the lotto game. 
+    It will allow the user to enter six numbers of their choice and give them a set of options, each performing a specific requirement. 
+    This program will display a simple menu to the user and the user will choose which option they want to pick. 
+    Once the user selects the option to enter their preferred numbers, the numbers will be shown onto the screen from the smallest to the highest. 
+    Then the program will compare these selected numbers with the winning numbers and will output a message, which tells the user which prize they have won.
     Author: Amar Plakalo
-    Date: 23 February 2020, updated 04/03/2021
+    Date: 23 February 2020, updated 13/03/2021
     Used Visual Studio Code on Windows 10
 */
 
@@ -24,7 +26,7 @@
     
     void frequency_numbers(int*); // Function which counts how many times a number was entered without exiting the program
 
-    void exit_program(int*,int*); // Function that quits the program or redirects user back to menu.
+    int exit_program(int*,int*,int*); // Function that quits the program or redirects user back to menu.
     
 
 int main()
@@ -41,6 +43,8 @@ int main()
         int option; // This is the option that the user chooses in the main menu
     
         int exit = 0; // This is a variable that is set to 0. It is used when the user wants to exit the program
+
+        int counter = 1;
         
         int second_option = 0; // This is needed in order to avoid the user picking option 1 at the start
         
@@ -51,7 +55,7 @@ int main()
         int fifth_option = 0; // This is needed in order to avoid the user picking option 1 at the start
 
 
-    do // This do statement will ensure that the code in the body of this statement will be executed at least once
+    while (counter == 1) // This do statement will ensure that the code in the body of this statement will be executed at least once
     {
         printf("\nLotto Game: Main Menu\n");
         printf("\n1.Enter your six numbers from 1 to 42 inclusive\n");
@@ -155,10 +159,19 @@ int main()
         
             case 6: // This is if the user enters option 6, which will give the user a choice of whether they want to exit the program or return back to the main menu
             {
+                int new_counter = 1;
     
-                exit_program(&exit,&option); // Returns the option that the user picked in the function
-                
-                break;
+                new_counter = exit_program(&exit,&option,&counter); // Returns the option that the user picked in the function
+                if(new_counter == 0)
+                {
+                    counter = 0;
+                    break;
+                }
+                else
+                {
+                    counter = 1;
+                    break;
+                }
             }
         
             default: // This is if the user entered anything that is not within the range of 1-6. 
@@ -169,9 +182,7 @@ int main()
             }
         
         } // End switch statement
-    } // End do
-    
-    while(option != 6); // Program will not end until option is 6
+    }
     
     getchar();
     return 0;
@@ -185,11 +196,13 @@ int main()
 void selected_numbers(int *selectednumbers2, int *count_numbers, int *menu_option, int *second_option, int *third_option, int *fourth_option, int *fifth_option)
 {
     printf("\nEnter six numbers of your choice from 1 to 42 inclusive: \n");
+    int elements_to_save[NUMBERS] = {}; // This element will be saved so that the array isn't filled with incorrect numbers
+    int element_repeated = 0; // to check whether an element was repeated. If it was, don't put into the new array.
     
     for(int i = 0; i < NUMBERS; i++)
     {
-        scanf("%d", & *(selectednumbers2 + i)); // Scans the number entered
-        if(*(selectednumbers2 + i) <= 0 || *(selectednumbers2 + i) > 42) // This is to error check if the number selected is less than or equal to 0 or greater than 42
+        scanf("%d", &*(elements_to_save + i)); // Scans the number entered
+        if(*(elements_to_save + i) <= 0 || *(elements_to_save + i) > 42) // This is to error check if the number selected is less than or equal to 0 or greater than 42
         {
             printf("\nYou are not allowed to enter a number less than 1 and higher than 42. You are being redirected back to the main menu\n");
             
@@ -197,33 +210,35 @@ void selected_numbers(int *selectednumbers2, int *count_numbers, int *menu_optio
             *third_option = -1;  
             *fourth_option = -1; 
             *fifth_option = -1;
-            for(int i = 0; i < NUMBERS; i++)
-            {
-                *(selectednumbers2 + i) = 0;
-            }
+            element_repeated = 1;
         
             *menu_option = 1;
             
             break; // Break statement and return to main menu
-        }
-        else
-        {
-            *(count_numbers + *(selectednumbers2 + i)) = *(count_numbers + *(selectednumbers2 + i)) + 1;
         }
     }
     for(int i = 0; i < NUMBERS; i++)
     {
         for(int j = i + 1; j < NUMBERS; j++)
         {
-            if(*(selectednumbers2 + i) == *(selectednumbers2 + j) && *(selectednumbers2 + i) > 0)
+            if(*(elements_to_save + i) == *(elements_to_save + j) && *(elements_to_save + i) > 0)
             {
-                printf("%d was repeated. Enter the numbers again!\n", *(selectednumbers2 + i));
+                printf("%d was repeated. Enter the numbers again!\n", *(elements_to_save + i));
                 *second_option = -1;
                 *third_option = -1;  
                 *fourth_option = -1; 
                 *fifth_option = -1;
-                *(count_numbers + *(selectednumbers2 + i)) = 0;
+                element_repeated = 1;
             }
+        }
+    }
+
+    if (element_repeated == 0)
+    {
+        for(int i = 0; i < NUMBERS; i++)
+        {
+            *(selectednumbers2 + i) = *(elements_to_save + i);
+            *(count_numbers + *(selectednumbers2 + i)) = *(count_numbers + *(selectednumbers2 + i)) + 1;
         }
     }
 }
@@ -256,15 +271,15 @@ void ascending_order(int *ascendingorder) // This function will return a sorted 
     for(int i = 1; i < NUMBERS; i++)
     {
         j = i;
-        while(*(ascendingorder + (i-1)) > *(ascendingorder + j)  && i > 0) // if the element in the position (i-1) is greater than the element ahead
+        while(*(ascendingorder + (i-1)) > *(ascendingorder + j)  && i > 0) // If the number is less than the previous number, execute this statement
         {
-            temp = *(ascendingorder + i); // put the element ahead into a temp variable
+            temp = *(ascendingorder + i); // Store the smaller number in the variable temp
                 
-            *(ascendingorder + i) = *(ascendingorder + (i-1)); // swap the order of the elements so that the one behind is now the one ahead
+            *(ascendingorder + i) = *(ascendingorder + (i-1)); // Store the greater value in the position ahead
                 
-            *(ascendingorder + (i-1)) = temp; // take the one that was ahead and put it behind
+            *(ascendingorder + (i-1)) = temp; // Store the smaller value in the position behind
             i = i-1;
-            j = j-1;
+            j = j-1; 
         } 
     }
     
@@ -348,7 +363,7 @@ void frequency_numbers(int *remember_numbers) // This will return to main() the 
 /*  Implement exit_program() function. This function will either quit the program for the user or redirect him/her to the main menu, depending on their choice.
 */
 
-void exit_program(int *choice,int *menu_option) // This function returns the choice that the user made. It also returns to menu if the user wants to play the lotto game again
+int exit_program(int *choice,int *menu_option,int *counter_var) // This function returns the choice that the user made. It also returns to menu if the user wants to play the lotto game again
 {
     printf("\nAre you sure that you want to quit this program? If so, press the number 6 again. If you wish to return to main menu, press 1 \n");
     scanf("%d", & *choice);
@@ -360,17 +375,22 @@ void exit_program(int *choice,int *menu_option) // This function returns the cho
         {
             printf("You are returning back to the main menu\n");
             *menu_option = 1;
+            *counter_var = 1;
+            return *counter_var;
         }
         case 6:
         {
             printf("Thanks for playing. Bye!\n");
-            break;
+            *counter_var = 0;
+            return *counter_var;
         }
         
         default:
         {
             printf("The option entered is not one that was specified. The program will return back to the main menu\n");
             *menu_option = 1;
+            *counter_var = 1;
+            return *counter_var;
             
         }
     }
