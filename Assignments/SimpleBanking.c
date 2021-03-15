@@ -14,7 +14,8 @@
 // Function Prototypes
 
 void create_account(int*,char*,int*,float*,int*,int*);
-void log_into_account(int*,int*,int*,int*,int*,int*);
+void log_into_account(int*,int*,int*,int*,int*);
+void depositing_money(float*,float*,float*,int*);
 
 # define SIZE 5
 
@@ -85,7 +86,7 @@ while (counter == 1)
         {
             if(option_1_completed == 1 && log_on == 0)
             {
-                log_into_account(&option_1_completed,&log_on,&acc_number,&account_number,&pin_entered,&pin);
+                log_into_account(&log_on,&acc_number,&account_number,&pin_entered,&pin);
                 break;
             }
             else if(option_1_completed == 0)
@@ -111,31 +112,8 @@ while (counter == 1)
         {
             if(option_1_completed == 1 && log_on == 1)
             {
-                printf("\nHow much cash do you wish to deposit? \n");
-                scanf("%f", &cashdeposit);
-                if (cashdeposit < 0)
-                {
-                    printf("\n------------------------------------\n");
-                    printf("You cannot deposit a negative number: \n");
-                    printf("\n------------------------------------\n");
-                    break;
-                }
-                else if(cashdeposit > 0)
-                {
-                    printf("\n-----------------------------------------------------------------------------\n");
-                    printf("\nTo confirm, You have chosen to deposit %.2f EUR into your bank account\n", cashdeposit);
-                    printf("\n-----------------------------------------------------------------------------\n");
-                    accountbalance = accountbalance + cashdeposit;
-                    previous_deposits[index_deposit] = cashdeposit;
-                    index_deposit++;
-                    if(index_deposit == 5)
-                    {
-                        index_deposit = 0;
-                        break;
-                    }
-                    
-                    break;
-                }
+                depositing_money(&cashdeposit,&accountbalance,previous_deposits,&index_deposit);
+                break;
             }
             else if(option_1_completed == 0)
             {
@@ -434,7 +412,7 @@ void create_account(int *option1_finished,char *f_name,int *user_age,float *ac_b
        
     }
 }
-void log_into_account(int *first_option_completed, int *logged_on,int *input_acc_number, int *real_acc, int *input_pin, int *real_pin)
+void log_into_account(int *logged_on,int *input_acc_number, int *real_acc, int *input_pin, int *real_pin)
 {
     printf("Hello! Enter your account number and PIN in order to log on: \n");
     scanf("%d",&*input_acc_number);
@@ -466,4 +444,30 @@ void log_into_account(int *first_option_completed, int *logged_on,int *input_acc
         *logged_on = 0;
     }
     
+}
+
+void depositing_money(float *deposit, float *balance, float *previous_deposits_by_user,int *index)
+{
+    printf("\nHow much cash do you wish to deposit? \n");
+    scanf("%f", &*deposit);
+    if (*deposit < 0)
+    {
+        printf("\n------------------------------------\n");
+        printf("You cannot deposit a negative number: \n");
+        printf("\n------------------------------------\n");
+    }
+    else if(*deposit > 0)
+    {
+        printf("\n-----------------------------------------------------------------------------\n");
+        printf("\nTo confirm, You have chosen to deposit %.2f EUR into your bank account\n", *deposit);
+        printf("\n-----------------------------------------------------------------------------\n");
+        *balance = *balance + *deposit;
+        *(previous_deposits_by_user + *index) = *deposit;
+        (*index)++;
+        if(*index == 5)
+        {
+            *index = 0;
+            
+        }
+    }
 }
