@@ -2,7 +2,7 @@
     After selecting a currency, you will be asked to enter three amounts into a floating-point array
     Author: Amar plakalo
     Used Visual Studio Code on Windows 10
-    Date: 20 February 2020 updated 07/03/2021
+    Date: 20 February 2020 updated 15/03/2021
 */
 
 #include <stdio.h>
@@ -23,56 +23,71 @@ int main()
     int i;
     int exitprogram = 3;
     float average;
-    
-    printf("\nMain Menu: \n");
-    printf("\n1.Choose the Euro currency\n");
-    printf("\n2.Choose the US Dollar Currency\n");
-    printf("\n3. Exit the program\n");
-    scanf("%d", &option); // Scan which option in the menu you have chosen
-    
-    if(option == 1)
-    {
-        printf("\nEnter the values in euros to be converted into US Dollars\n");
-        
-        for(i = 0; i < SIZE; i++)
-        {
-            scanf("%f", &array[i]);
+    int counter = 1;
 
+    while(counter == 1)
+    {
+    
+        printf("\nMain Menu: \n");
+        printf("\n1.Choose the Euro currency\n");
+        printf("\n2.Choose the US Dollar Currency\n");
+        printf("\n3. Exit the program\n");
+        scanf("%d", &option); // Scan which option in the menu you have chosen
+        
+        if(option == 1)
+        {
+            printf("\nEnter the values in euros to be converted into US Dollars\n");
+            
+            for(i = 0; i < SIZE; i++)
+            {
+                scanf("%f", &array[i]);
+
+            }
+            
+            
+            // Call Function change_to_Dollar() and pass the array into it. Once it is passed, the function should return the average back to the int main() 
+            average = change_to_Dollar(array);
+            printf("\nThe average of the values converted to US Dollar is %f\n", average);
+            
         }
         
-        
-        // Call Function change_to_Dollar() and pass the array into it. Once it is passed, the function should return the average back to the int main() 
-        average = change_to_Dollar(array);
-        printf("\nThe average of the values converted to US Dollar is %f\n", average);
-        
-    }
-    
-    else if(option == 2)
-    {
-        printf("\nEnter the values in dollars to be converted into Euro\n");
-        
-        for(i = 0; i < SIZE; i++)
+        else if(option == 2)
         {
-            scanf("%f", &array[i]);
+            printf("\nEnter the values in dollars to be converted into Euro\n");
+            
+            for(i = 0; i < SIZE; i++)
+            {
+                scanf("%f", &array[i]);
+            }
+            
+            // Call function change_to_Euro() and pass the array into this function. When you pass it, the function should return the average back into the main()
+        
+            average = change_to_Euro(array);
+        
+            printf("\nThe average of the values converted into Euro is %f\n", average);
+        
+            
         }
         
-        // Call function change_to_Euro() and pass the array into this function. When you pass it, the function should return the average back into the main()
-    
-        average = change_to_Euro(array);
-    
-        printf("\nThe average of the values converted into Euro is %f\n", average);
-    
-        
-    }
-    
-    else if(option == 3)
-    {
-        printf("\nAre you sure that you want to quit the program? If yes, press 3 again\n");
-        scanf("%d", &exitprogram);
-        
-        if(exitprogram == 3)
+        else if(option == 3)
         {
-            return 0;
+            int quit_program;
+            printf("\nAre you sure that you want to quit the program? If yes, press 3 again\n");
+            scanf("%d", &quit_program);
+            if (quit_program == 3)
+            {
+                counter = 0;
+            }
+            else
+            {
+                printf("You are redirected back to the main menu: ");
+                counter = 1;
+            }
+        }
+        else
+        {
+            printf("None of the options have been selected. Pick a valid option: ");
+
         }
     }
     
