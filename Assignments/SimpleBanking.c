@@ -18,6 +18,9 @@ void log_into_account(int*,int*,int*,int*,int*);
 void depositing_money(float*,float*,float*,int*);
 void withdrawing_money(float*,float*,float*,int*);
 void paying_your_bill(int*,float*,float*,char*,int*,int*,float*,int*);
+void displaying_the_account_info(char*,float*,int*,float*,int*,float*);
+void log_out_of_account(char*,int*);
+void exitprogram(int*);
 
 # define SIZE 5
 
@@ -176,23 +179,7 @@ while (counter == 1)
         {
             if(option_1_completed ==  1 && log_on == 1)
             {
-                printf("\n------------------------------------------\n");
-                printf("\nAccount Name - %s\n",name);
-                printf("\nYour account balance - %.2f EUR\n", accountbalance);
-                printf("\nPrevious deposits - \n");
-                for(int i = 0; i < index_deposit; i++)
-                {
-                    printf("%f,",previous_deposits[i]);
-                }
-
-                printf("\n");
-                printf("\nPrevious withdraws - \n");
-                for(int i = 0; i < index_withdraw; i++)
-                {
-                    printf("%f,",previous_withdraws[i]);
-                }
-                printf("\n------------------------------------------\n");
-            
+                displaying_the_account_info(name,&accountbalance,&index_deposit,previous_deposits,&index_withdraw,previous_withdraws);            
                 break;
             }
             else if(option_1_completed == 0 || log_on == 0)
@@ -209,31 +196,8 @@ while (counter == 1)
         {
             if(option_1_completed == 1 && log_on == 1)
             { 
-                printf("\nDo you really want to logout? If Yes, press y and press n if No: \n");
-                getchar();
-                scanf("%c", &logout);
-                if(logout == 'y' || logout == 'Y')
-                {
-                    printf("\n----------------------------------------------------\n");
-                    printf("Thanks for using the app!!! Press any button to exit: \n");
-                    printf("\n----------------------------------------------------\n");
-                    counter = 0;
-                    break;
-                }
-                else if(logout == 'n' || logout == 'N')
-                {
-                    printf("\n------------------------------------------------\n");
-                    printf("Ok. Enter any button to return back to main menu: \n");
-                    printf("\n------------------------------------------------\n");
-                    break;
-                }
-                else
-                {
-                    printf("\n------------------------------------------\n");
-                    printf("Not the correct option selected!!Try again: \n");
-                    printf("\n------------------------------------------\n");
-                    break;
-                }
+                log_out_of_account(&logout,&counter);
+                break;
             }
             else if(option_1_completed == 1 && log_on == 0)
             {
@@ -254,25 +218,8 @@ while (counter == 1)
         
         case 8: // Exit Program
         {
-            int exit_program_option = 0;
-            printf("Do you want to exit this program? If yes, choose number 8. Otherwise, press any other button to return back to the menu: ");
-            scanf("%d",&exit_program_option);
-            if (exit_program_option == 8) // if the user chose 8
-            {
-                printf("\n-----------------------------------------------------------------------\n");
-                printf("\nThanks for using this app!!! Press any button and you're done!! Goodbye!!");
-                printf("\n-----------------------------------------------------------------------\n");
-                counter = 0; // this will stop the while loop from executing, which ends the program.
-                break;
-            }
-            else
-            {
-                printf("\n--------------------\n");
-                printf("Back to the main menu!");
-                printf("\n--------------------\n");
-                counter = 1; // this will let the while loop continue running as normal.
-                break;
-            }
+            exitprogram(&counter);
+            break;
         }
 
         case 9: // Clear output and display available options
@@ -478,5 +425,72 @@ void paying_your_bill(int *company_account_number,float *billtotal,float *a_bala
         printf("\n---------------------------------------------------------------\n");
         printf("You cannot pay for the bill - The account balance will go under 0 EUR: ");
         printf("\n---------------------------------------------------------------\n");
+    }
+}
+
+void displaying_the_account_info(char *name_of_user,float *user_balance_amount,int *deposit_index,float *deposited_by_user,int *withdraw_index,float *withdrawals_by_user)
+{
+    printf("\n------------------------------------------\n");
+    printf("\nAccount Name - %s\n",*name_of_user);
+    printf("\nYour account balance - %.2f EUR\n", *user_balance_amount);
+    printf("\nPrevious deposits - \n");
+    for(int i = 0; i < *deposit_index; i++)
+    {
+        printf("%f,",*(deposited_by_user + i));
+    }
+
+    printf("\n");
+    printf("\nPrevious withdraws - \n");
+    for(int i = 0; i < *withdraw_index; i++)
+    {
+        printf("%f,",*(withdrawals_by_user + i));
+    }
+    printf("\n------------------------------------------\n");
+}
+
+void log_out_of_account(char *logout_option,int *count)
+{
+    printf("\nDo you really want to logout? If Yes, press y and press n if No: \n");
+    getchar();
+    scanf("%c", &*logout_option);
+    if(*logout_option == 'y' || *logout_option == 'Y')
+    {
+        printf("\n----------------------------------------------------\n");
+        printf("Thanks for using the app!!! Press any button to exit: \n");
+        printf("\n----------------------------------------------------\n");
+        *count = 0;
+    }
+    else if(*logout_option == 'n' || *logout_option == 'N')
+    {
+        printf("\n------------------------------------------------\n");
+        printf("Ok. Enter any button to return back to main menu: \n");
+        printf("\n------------------------------------------------\n");
+    }
+    else
+    {
+        printf("\n------------------------------------------\n");
+        printf("Not the correct option selected!!Try again: \n");
+        printf("\n------------------------------------------\n");
+    }   
+}
+
+void exitprogram(int *check_whether_user_wants_to_exit)
+{
+    int exit_program_option = 0;
+    printf("Do you want to exit this program? If yes, choose number 8. Otherwise, press any other button to return back to the menu: ");
+    scanf("%d",&exit_program_option);
+    if (exit_program_option == 8) // if the user chose 8
+    {
+        printf("\n-----------------------------------------------------------------------\n");
+        printf("\nThanks for using this app!!! Press any button and you're done!! Goodbye!!");
+        printf("\n-----------------------------------------------------------------------\n");
+        *check_whether_user_wants_to_exit = 0; // this will stop the while loop from executing, which ends the program.
+    }
+    else
+    {
+        printf("\n--------------------\n");
+        printf("Back to the main menu!");
+        printf("\n--------------------\n");
+        *check_whether_user_wants_to_exit = 1; // this will let the while loop continue running as normal.
     }
 }
