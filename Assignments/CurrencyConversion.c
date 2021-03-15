@@ -7,14 +7,11 @@
 
 #include <stdio.h>
 
+#define SIZE 50
 
-#define SIZE 3
+float change_to_Euro(float array[SIZE],int); // converts US Dollars into Euro
 
-
-
-float change_to_Euro(float array[SIZE]); // converts US Dollars into Euro
-
-float change_to_Dollar(float array[SIZE]); // Converts Euro into US Dollars
+float change_to_Dollar(float array[SIZE],int); // Converts Euro into US Dollars
 
 int main()
 {
@@ -24,6 +21,7 @@ int main()
     int exitprogram = 3;
     float average;
     int counter = 1;
+    int no_of_values = 0;
 
     while(counter == 1)
     {
@@ -36,9 +34,11 @@ int main()
         
         if(option == 1)
         {
-            printf("\nEnter the values in euros to be converted into US Dollars\n");
+            printf("How many values do you wish to enter? Maximum number of values you are allowed to input is 50: ");
+            scanf("%d",&no_of_values);
+            printf("\nEnter values in euros to be converted into US Dollars\n");
             
-            for(i = 0; i < SIZE; i++)
+            for(i = 0; i < no_of_values; i++)
             {
                 scanf("%f", &array[i]);
 
@@ -46,23 +46,26 @@ int main()
             
             
             // Call Function change_to_Dollar() and pass the array into it. Once it is passed, the function should return the average back to the int main() 
-            average = change_to_Dollar(array);
+            average = change_to_Dollar(array,no_of_values);
             printf("\nThe average of the values converted to US Dollar is %f\n", average);
             
         }
         
         else if(option == 2)
         {
-            printf("\nEnter the values in dollars to be converted into Euro\n");
+            printf("How many values do you wish to enter?");
+            scanf("%d",&no_of_values);
             
-            for(i = 0; i < SIZE; i++)
+            printf("\nEnter three values in dollars to be converted into Euro\n");
+            
+            for(i = 0; i < no_of_values; i++)
             {
                 scanf("%f", &array[i]);
             }
             
             // Call function change_to_Euro() and pass the array into this function. When you pass it, the function should return the average back into the main()
         
-            average = change_to_Euro(array);
+            average = change_to_Euro(array,no_of_values);
         
             printf("\nThe average of the values converted into Euro is %f\n", average);
         
@@ -100,23 +103,23 @@ int main()
 /* Implement the function change_to_Dollar() and pass the array into it. Once passed, the function will find the average and return this value into the main()
 */
 
-float change_to_Dollar(float array1[SIZE])
+float change_to_Dollar(float array1[SIZE],int number_of_values)
 {
     int i;
     float avg;
     float total = 0;
     float convertedvalue[SIZE];
     
-    for(i = 0; i < SIZE; i++)
+    for(i = 0; i < number_of_values; i++)
     {
         convertedvalue[i] = array1[i] * 1.19;
         total = total + convertedvalue[i];
         
     }
     
-    for(i = 0; i < SIZE; i++)
+    for(i = 0; i < number_of_values; i++)
     {
-        printf("\nEuro converted to dollar = %f\n", convertedvalue[i]);
+        printf("\n%.2f Euro -> %.2f Dollars\n", array1[i],convertedvalue[i]);
     }
     
     avg = total / 3.0;
@@ -125,22 +128,22 @@ float change_to_Dollar(float array1[SIZE])
     return avg;
 }
 
-float change_to_Euro(float array2[SIZE])
+float change_to_Euro(float array2[SIZE],int numb_of_values)
 {
     int i;
     float avg2;
     float total2 = 0;
     float convertedvalue2[SIZE];
     
-    for(i = 0; i < SIZE; i++)
+    for(i = 0; i < numb_of_values; i++)
     {
         convertedvalue2[i] = array2[i] * 0.84;
         total2 = total2 + convertedvalue2[i];
     }
     
-    for(i = 0; i < SIZE; i++)
+    for(i = 0; i < numb_of_values; i++)
     {
-        printf("\nUS Dollar converted to euro = %f\n", convertedvalue2[i]);
+        printf("\n%.2f US Dollar -> %.2f Euro\n", array2[i],convertedvalue2[i]);
     }
     
     avg2 = total2 / 3.0;
