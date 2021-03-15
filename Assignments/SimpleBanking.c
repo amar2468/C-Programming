@@ -407,8 +407,8 @@ void paying_your_bill(int *company_account_number,float *billtotal,float *a_bala
     {
 
         printf("\nWrite a short note, e.g. This is my payment for the electricity bill: \n");
-        scanf("%s",&*msg);
         getchar();
+        gets(msg);
 
         printf("\nEnter your account number to verify that this is you: \n");
         scanf("%d", &*verify_account_no);
