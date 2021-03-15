@@ -20,9 +20,9 @@ If the user picks the 5th option, they can pay a bill. If they are logged in and
 
 Option 6 allows the user to see their relevant information about their account. To do this, they must be logged on and they must have completed option 1. The information that is shown to the user is - their account name, their account balance, their previous withdraws and their previous deposits. If they did not complete option 1 or they did not log on, they cannot complete this option. 
 
-In option 7, the user can log off. If they have completed option 1 and they are logged on, they will then be asked whether they wish to log off. If they choose 'y' or 'Y', the user will log off. If they insert 'n' or 'N', they will return back to menu. Otherwise, they return back to menu. If they have completed option 1 but have not logged in, an error message saying that they did not log in will be presented. If they have not completed option 1 and have not logged in, the error message will say that they have not registered. 
+In option 7, the user can log off.  If they have completed option 1 and they are logged on, the function will be called which will allow the user to log off. They will then be asked whether they wish to log off. If they choose 'y' or 'Y', the user will log off. If they insert 'n' or 'N', they will return back to menu. Otherwise, they return back to menu. If they have completed option 1 but have not logged in, an error message saying that they did not log in will be presented. If they have not completed option 1 and have not logged in, the error message will say that they have not registered. 
 
-If the user chose option 8, the user can exit the program. If the user types in "8", the program will exit. Otherwise, if they click any other button, the program will return back to the main menu. 
+If the user chose option 8, the user can exit the program. The function is first called and it allows the user to exit the program. If the user types in "8", the program will exit. Otherwise, if they click any other button, the program will return back to the main menu. 
 
 If the user chooses option 9, the screen will clear. This is for visibility so that the user can clear the screen if there is too much unnecessary information.
 
