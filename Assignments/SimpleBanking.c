@@ -14,6 +14,7 @@
 // Function Prototypes
 
 void create_account(int*,char*,int*,float*,int*,int*);
+void log_into_account(int*,int*,int*,int*,int*,int*);
 
 # define SIZE 5
 
@@ -84,38 +85,8 @@ while (counter == 1)
         {
             if(option_1_completed == 1 && log_on == 0)
             {
-                printf("Hello! Enter your account number and PIN in order to log on: \n");
-                scanf("%d",&acc_number);
-                getchar();
-                scanf("%d",&pin_entered);
-                getchar();
-                if (acc_number == account_number)
-                {
-                    if (pin == pin_entered)
-                    {
-                        printf("\n------------------------------------------------------------\n");
-                        printf("Well done. Correct account number and PIN. You are logged on: \n");
-                        printf("\n------------------------------------------------------------\n");
-                        log_on = 1;
-                        break;
-                    }
-                    else if(pin != pin_entered)
-                    {
-                        printf("\n-------------\n");
-                        printf("Incorrect PIN: \n");
-                        printf("\n-------------\n");
-                        log_on = 0;
-                        break;
-                    }
-                }
-                else if(acc_number != account_number)
-                {
-                    printf("\n------------------------\n");
-                    printf("Incorrect account number: \n");
-                    printf("\n------------------------\n");
-                    log_on = 0;
-                    break;
-                }
+                log_into_account(&option_1_completed,&log_on,&acc_number,&account_number,&pin_entered,&pin);
+                break;
             }
             else if(option_1_completed == 0)
             {
@@ -125,7 +96,7 @@ while (counter == 1)
                 log_on = 0;
                 break;
             }
-            else if(log_on == 1)
+            else if(option_1_completed == 1)
             {
                 printf("\n-----------------------------------------------------\n");
                 printf("You cannot log on because - you have already logged on!\n");
@@ -133,6 +104,7 @@ while (counter == 1)
                 log_on = 1;
                 break;
             }
+                
         }
         
         case 3: // Cash deposit
@@ -461,4 +433,37 @@ void create_account(int *option1_finished,char *f_name,int *user_age,float *ac_b
         printf("\n--------------------------------------------------------------------\n");
        
     }
+}
+void log_into_account(int *first_option_completed, int *logged_on,int *input_acc_number, int *real_acc, int *input_pin, int *real_pin)
+{
+    printf("Hello! Enter your account number and PIN in order to log on: \n");
+    scanf("%d",&*input_acc_number);
+    getchar();
+    scanf("%d",&*input_pin);
+    getchar();
+    if (*input_acc_number == *real_acc)
+    {
+        if (*real_pin == *input_pin)
+        {
+            printf("\n------------------------------------------------------------\n");
+            printf("Well done. Correct account number and PIN. You are logged on: \n");
+            printf("\n------------------------------------------------------------\n");
+            *logged_on = 1;
+        }
+        else if(*real_pin != *input_pin)
+        {
+            printf("\n-------------\n");
+            printf("Incorrect PIN: \n");
+            printf("\n-------------\n");
+            *logged_on = 0;
+        }
+    }
+    else if(*input_acc_number != *real_acc)
+    {
+        printf("\n------------------------\n");
+        printf("Incorrect account number: \n");
+        printf("\n------------------------\n");
+        *logged_on = 0;
+    }
+    
 }
