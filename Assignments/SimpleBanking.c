@@ -16,6 +16,8 @@
 void create_account(int*,char*,int*,float*,int*,int*);
 void log_into_account(int*,int*,int*,int*,int*);
 void depositing_money(float*,float*,float*,int*);
+void withdrawing_money(float*,float*,float*,int*);
+void paying_your_bill(int*,float*,float*,char*,int*,int*,float*,int*);
 
 # define SIZE 5
 
@@ -134,30 +136,8 @@ while (counter == 1)
         {
             if(option_1_completed == 1 && log_on == 1)
             {
-                printf("\nHow much money do you want to withdraw from your account?\n");
-                scanf("%f", &cashwithdraw);
-                if(accountbalance < 0)
-                {
-                    printf("\n---------------------------------------------------------------------------------\n");
-                    printf("You cannot withdraw the money from the account because the balance is less than 0 EUR: \n");
-                    printf("\n---------------------------------------------------------------------------------\n");
-                    break;
-                }
-                else if(accountbalance > 0)
-                {
-                    printf("\n-------------------------------------------------------------------\n");
-                    printf("\nTo confirm, You wish to withdraw %.2f EUR from your account\n", cashwithdraw);
-                    printf("\n-------------------------------------------------------------------\n");
-                    accountbalance = accountbalance - cashwithdraw;
-                    previous_withdraws[index_withdraw] = cashwithdraw;
-                    index_withdraw++;
-                    if (index_withdraw == 5)
-                    {
-                        index_withdraw = 0;
-                        break;
-                    }
-                    break;
-                }
+                withdrawing_money(&cashwithdraw,&accountbalance,previous_withdraws,&index_withdraw);
+                break;
             }
             else if(option_1_completed == 0 && log_on == 0)
             {
@@ -178,53 +158,8 @@ while (counter == 1)
         {
             if(option_1_completed == 1  && log_on == 1)
             {
-                printf("\nEnter the account number of the company: \n");
-                scanf("%d",&company_acc_no);
-                getchar();
-                printf("\nEnter the bill amount that you are due to pay: \n");
-                scanf("%f",&bill_total);
-                if(accountbalance - bill_total >= 0)
-                {
-
-                    printf("\nWrite a short note, e.g. This is my payment for the electricity bill: \n");
-                    getchar();
-                    gets(message);
-
-                    printf("\nEnter your account number to verify that this is you: \n");
-                    scanf("%d", &verify_my_acc_no);
-
-
-                    if (verify_my_acc_no == account_number)
-                    {
-                        printf("\n-------------------------\n");
-                        printf("\nSuccessful transaction!!!\n");
-                        accountbalance = accountbalance - bill_total;
-                        previous_withdraws[index_withdraw] = bill_total;
-                        index_withdraw++;
-                        if (index_withdraw == 5)
-                        {
-                            index_withdraw = 0;
-                            break;
-                        }
-                        
-                        printf("\n-------------------------\n");
-                        break;
-                    }
-                    else
-                    {
-                        printf("\n----------------------------------\n");
-                        printf("\nIncorrect account number entered: \n");
-                        printf("\n----------------------------------\n");
-                        break;
-                    }
-                }
-                else if(accountbalance - bill_total < 0)
-                {
-                    printf("\n---------------------------------------------------------------\n");
-                    printf("You cannot pay for the bill - The account balance will go under 0 EUR: ");
-                    printf("\n---------------------------------------------------------------\n");
-                    break;
-                }
+                paying_your_bill(&company_acc_no,&bill_total,&accountbalance,message,&verify_my_acc_no,&account_number,previous_withdraws,&index_withdraw);
+                break;
             }
             else if(log_on == 0)
             {
@@ -446,7 +381,7 @@ void log_into_account(int *logged_on,int *input_acc_number, int *real_acc, int *
     
 }
 
-void depositing_money(float *deposit, float *balance, float *previous_deposits_by_user,int *index)
+void depositing_money(float *deposit, float *balance, float *previous_deposits_by_user,int *index_to_deposit)
 {
     printf("\nHow much cash do you wish to deposit? \n");
     scanf("%f", &*deposit);
@@ -462,12 +397,86 @@ void depositing_money(float *deposit, float *balance, float *previous_deposits_b
         printf("\nTo confirm, You have chosen to deposit %.2f EUR into your bank account\n", *deposit);
         printf("\n-----------------------------------------------------------------------------\n");
         *balance = *balance + *deposit;
-        *(previous_deposits_by_user + *index) = *deposit;
-        (*index)++;
-        if(*index == 5)
+        *(previous_deposits_by_user + *index_to_deposit) = *deposit;
+        (*index_to_deposit)++;
+        if(*index_to_deposit == 5)
         {
-            *index = 0;
+            *index_to_deposit = 0;
             
         }
+    }
+}
+
+void withdrawing_money(float *withdraw, float *balance_in_account, float *last_withdraws, int *index_for_withdraws)
+{
+    printf("\nHow much money do you want to withdraw from your account?\n");
+    scanf("%f", &*withdraw);
+    if(*balance_in_account < 0)
+    {
+        printf("\n---------------------------------------------------------------------------------\n");
+        printf("You cannot withdraw the money from the account because the balance is less than 0 EUR: \n");
+        printf("\n---------------------------------------------------------------------------------\n");
+       
+    }
+    else if(*balance_in_account > 0)
+    {
+        printf("\n-------------------------------------------------------------------\n");
+        printf("\nTo confirm, You wish to withdraw %.2f EUR from your account\n", *withdraw);
+        printf("\n-------------------------------------------------------------------\n");
+        *balance_in_account = *balance_in_account - *withdraw;
+        *(last_withdraws + *index_for_withdraws) = *withdraw;
+        (*index_for_withdraws)++;
+        if (*index_for_withdraws == 5)
+        {
+            *index_for_withdraws = 0;
+        }
+    }
+
+}
+
+void paying_your_bill(int *company_account_number,float *billtotal,float *a_balance,char *msg,int *verify_account_no,int *correct_acc_no, float *previouswithdraws,int *indexforwithdraws)
+{
+    printf("\nEnter the account number of the company: \n");
+    scanf("%d",&*company_account_number);
+    getchar();
+    printf("\nEnter the bill amount that you are due to pay: \n");
+    scanf("%f",&*billtotal);
+    if(*a_balance - *billtotal >= 0)
+    {
+
+        printf("\nWrite a short note, e.g. This is my payment for the electricity bill: \n");
+        scanf("%s",&*msg);
+        getchar();
+
+        printf("\nEnter your account number to verify that this is you: \n");
+        scanf("%d", &*verify_account_no);
+
+
+        if (*verify_account_no == *correct_acc_no)
+        {
+            printf("\n-------------------------\n");
+            printf("\nSuccessful transaction!!!\n");
+            *a_balance = *a_balance - *billtotal;
+            *(previouswithdraws + *indexforwithdraws) = *billtotal;
+            (*indexforwithdraws)++;
+            if (*indexforwithdraws == 5)
+            {
+                *indexforwithdraws = 0;
+            }
+                        
+            printf("\n-------------------------\n");
+        }
+        else
+        {
+            printf("\n----------------------------------\n");
+            printf("\nIncorrect account number entered: \n");
+            printf("\n----------------------------------\n");
+        }
+    }
+    else if(*a_balance - *billtotal < 0)
+    {
+        printf("\n---------------------------------------------------------------\n");
+        printf("You cannot pay for the bill - The account balance will go under 0 EUR: ");
+        printf("\n---------------------------------------------------------------\n");
     }
 }
