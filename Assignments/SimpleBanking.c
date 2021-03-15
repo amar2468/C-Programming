@@ -18,8 +18,7 @@ void log_into_account(int*,int*,int*,int*,int*);
 void depositing_money(float*,float*,float*,int*);
 void withdrawing_money(float*,float*,float*,int*);
 void paying_your_bill(int*,float*,float*,char*,int*,int*,float*,int*);
-void displaying_the_account_info(char*,float*,int*,float*,int*,float*);
-void log_out_of_account(char*,int*);
+void log_out_of_account(char*,int*,int*);
 void exitprogram(int*);
 
 # define SIZE 5
@@ -179,7 +178,22 @@ while (counter == 1)
         {
             if(option_1_completed ==  1 && log_on == 1)
             {
-                displaying_the_account_info(name,&accountbalance,&index_deposit,previous_deposits,&index_withdraw,previous_withdraws);            
+                printf("\n------------------------------------------\n");
+                printf("\nAccount Name - %s\n",name);
+                printf("\nYour account balance - %.2f EUR\n", accountbalance);
+                printf("\nPrevious deposits - \n");
+                for(int i = 0; i < index_deposit; i++)
+                {
+                    printf("%.2f,",previous_deposits[i]);
+                }
+                printf("\n");
+                printf("\nPrevious withdraws - \n");
+                for(int i = 0; i < index_withdraw; i++)
+                {
+                    printf("%.2f,",previous_withdraws[i]);
+                }
+                printf("\n------------------------------------------\n");
+            
                 break;
             }
             else if(option_1_completed == 0 || log_on == 0)
@@ -189,6 +203,7 @@ while (counter == 1)
                 printf("\n----------------------------------------------------------------------------------\n");
                 option_1_completed = 0;
                 break;
+            
             }
         }
         
@@ -196,7 +211,7 @@ while (counter == 1)
         {
             if(option_1_completed == 1 && log_on == 1)
             { 
-                log_out_of_account(&logout,&counter);
+                log_out_of_account(&logout,&counter,&log_on);
                 break;
             }
             else if(option_1_completed == 1 && log_on == 0)
@@ -428,27 +443,7 @@ void paying_your_bill(int *company_account_number,float *billtotal,float *a_bala
     }
 }
 
-void displaying_the_account_info(char *name_of_user,float *user_balance_amount,int *deposit_index,float *deposited_by_user,int *withdraw_index,float *withdrawals_by_user)
-{
-    printf("\n------------------------------------------\n");
-    printf("\nAccount Name - %s\n",*name_of_user);
-    printf("\nYour account balance - %.2f EUR\n", *user_balance_amount);
-    printf("\nPrevious deposits - \n");
-    for(int i = 0; i < *deposit_index; i++)
-    {
-        printf("%f,",*(deposited_by_user + i));
-    }
-
-    printf("\n");
-    printf("\nPrevious withdraws - \n");
-    for(int i = 0; i < *withdraw_index; i++)
-    {
-        printf("%f,",*(withdrawals_by_user + i));
-    }
-    printf("\n------------------------------------------\n");
-}
-
-void log_out_of_account(char *logout_option,int *count)
+void log_out_of_account(char *logout_option,int *count,int *lets_user_log_off)
 {
     printf("\nDo you really want to logout? If Yes, press y and press n if No: \n");
     getchar();
@@ -456,21 +451,24 @@ void log_out_of_account(char *logout_option,int *count)
     if(*logout_option == 'y' || *logout_option == 'Y')
     {
         printf("\n----------------------------------------------------\n");
-        printf("Thanks for using the app!!! Press any button to exit: \n");
+        printf("You have successfully logged off! \n");
         printf("\n----------------------------------------------------\n");
-        *count = 0;
+        *count = 1;
+        *lets_user_log_off = 0;
     }
     else if(*logout_option == 'n' || *logout_option == 'N')
     {
         printf("\n------------------------------------------------\n");
         printf("Ok. Enter any button to return back to main menu: \n");
         printf("\n------------------------------------------------\n");
+        *lets_user_log_off = 1;
     }
     else
     {
         printf("\n------------------------------------------\n");
         printf("Not the correct option selected!!Try again: \n");
         printf("\n------------------------------------------\n");
+        *lets_user_log_off = 1;
     }   
 }
 
