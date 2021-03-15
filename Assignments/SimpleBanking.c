@@ -4,12 +4,16 @@
     
     ****************************This is my personal project that I did***********************************
     Author: Amar Plakalo
-    Date - Updated: 13 March 2021 
+    Date - Updated: 15 March 2021 
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+// Function Prototypes
+
+void create_account(int*,char*,int*,float*,int*,int*);
 
 # define SIZE 5
 
@@ -63,53 +67,8 @@ while (counter == 1)
         {
             if (option_1_completed == 0 && log_on == 0)
             {
-                printf("\nWhat is your name?\n");
-                scanf("%s", &name);
-                getchar();
-            
-                printf("\nHow old are you?\n");
-                scanf("%d", &age);
-                getchar();
-                if(age < 18)
-                {
-                    printf("\n------------------------------------------------------------------------\n");
-                    printf("\nYou are too young to create an account with us. You must be 18 or higher\n");
-                    printf("\n------------------------------------------------------------------------\n");
-                    option_1_completed = 0;
-                    break;
-                    
-                }
-                else if(age >= 18)
-                {
-                    printf("\nCongrats! You have created your first bank account. Use it wisely and earn a lot of money\n");
-                }
-
-                printf("How much money do you wish to put into your bank account? ");
-                scanf("%f",&accountbalance);
-
-                printf("\n----------------------------------------------\n");
-
-                if(accountbalance < 0)
-                {
-                    printf("\n------------------------------------------------------------------------------\n");
-                    printf("You cannot put deposit a minus number into your account. Only positive numbers: \n");
-                    printf("\n------------------------------------------------------------------------------\n");
-                    accountbalance = 0;
-                    option_1_completed = 0;
-                    break;
-
-                }
-                else if(accountbalance > 0)
-                {
-                    printf("\n--------------------------------------------------------------------\n");
-                    printf("You successfully put %.2f EUR into your account. Well done!!!\n",accountbalance);
-                    option_1_completed = 1;
-                    printf("Your account number is : %d\n",account_number);
-                    printf("Your PIN is %d. Keep this safe!!\n",pin);
-                    printf("\n--------------------------------------------------------------------\n");
-                    break;
-                }
-            
+                create_account(&option_1_completed,name,&age,&accountbalance,&account_number,&pin); // Function is called that executes and allows user to create 
+                                                                                                                        // Account for themselves
                 break;
             }
             else if(option_1_completed == 1)
@@ -448,4 +407,58 @@ while (counter == 1)
     getchar();
     getchar();
     return 0;
+}
+
+// Function implementation
+
+void create_account(int *option1_finished,char *f_name,int *user_age,float *ac_balance,int *act_number,int *pin_number_user)
+{
+    printf("\nWhat is your name?\n");
+    scanf("%s", &*f_name);
+    getchar();
+
+    printf("\nHow old are you?\n");
+    scanf("%d", &*user_age);
+    getchar();
+    if(*user_age < 18)
+    {
+        printf("\n------------------------------------------------------------------------\n");
+        printf("\nYou are too young to create an account with us. You must be 18 or higher\n");
+        printf("\n------------------------------------------------------------------------\n");
+        *option1_finished = 0;
+        
+        
+    }
+    else if(*user_age >= 18)
+    {
+        printf("\n-----------------------------------------------------------------------------------\n");
+        printf("\nYou are 18 or over. You can now continue with the process of creating the account! \n");
+        printf("\n-----------------------------------------------------------------------------------\n");
+    }
+
+    printf("\n------------------------------------------------------\n");
+    printf("How much money do you wish to put into your bank account? ");
+    printf("\n------------------------------------------------------\n");
+    scanf("%f",&*ac_balance);
+
+    if(*ac_balance < 0)
+    {
+        printf("\n------------------------------------------------------------------------------\n");
+        printf("You cannot put deposit a minus number into your account. Only positive numbers: \n");
+        printf("\n------------------------------------------------------------------------------\n");
+        *ac_balance = 0;
+        *option1_finished = 0;
+        
+
+    }
+    else if(*ac_balance > 0)
+    {
+        printf("\n--------------------------------------------------------------------\n");
+        printf("You successfully put %.2f EUR into your account. Well done!!!\n",*ac_balance);
+        *option1_finished = 1;
+        printf("Your account number is : %d\n",*act_number);
+        printf("Your PIN is %d. Keep this safe!!\n",*pin_number_user);
+        printf("\n--------------------------------------------------------------------\n");
+       
+    }
 }
