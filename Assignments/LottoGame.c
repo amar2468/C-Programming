@@ -4,7 +4,7 @@
     Once the user selects the option to enter their preferred numbers, the numbers will be shown onto the screen from the smallest to the highest. 
     Then the program will compare these selected numbers with the winning numbers and will output a message, which tells the user which prize they have won.
     Author: Amar Plakalo
-    Date: 23 February 2020, updated 13/03/2021
+    Date: 23 February 2020, updated 15/03/2021
     Used Visual Studio Code on Windows 10
 */
 
@@ -162,14 +162,14 @@ int main()
                 int new_counter = 1;
     
                 new_counter = exit_program(&exit,&option,&counter); // Returns the option that the user picked in the function
-                if(new_counter == 0)
+                if(new_counter == 0) // if the value returned from the function is 0
                 {
-                    counter = 0;
+                    counter = 0; // stop the program
                     break;
                 }
-                else
+                else // otherwise
                 {
-                    counter = 1;
+                    counter = 1; // let the menu reappear
                     break;
                 }
             }
@@ -363,34 +363,35 @@ void frequency_numbers(int *remember_numbers) // This will return to main() the 
 /*  Implement exit_program() function. This function will either quit the program for the user or redirect him/her to the main menu, depending on their choice.
 */
 
-int exit_program(int *choice,int *menu_option,int *counter_var) // This function returns the choice that the user made. It also returns to menu if the user wants to play the lotto game again
+int exit_program(int *choice,int *menu_option,int *counter_var) // This function returns the choice that the user made. 
+                                                                //It also returns to menu if the user wants to play the lotto game again
 {
     printf("\nAre you sure that you want to quit this program? If so, press the number 6 again. If you wish to return to main menu, press 1 \n");
-    scanf("%d", & *choice);
+    scanf("%d", & *choice); // Listens for the answer from the user
     getchar();
     
-    switch(*choice)
+    switch(*choice) // switch goes through the cases and checks to see what the program should do
     {
-        case 1:
+        case 1: // If user chose option 1
         {
-            printf("You are returning back to the main menu\n");
-            *menu_option = 1;
-            *counter_var = 1;
-            return *counter_var;
+            printf("You are returning back to the main menu\n"); // Message printed to screen telling the user that they are returning back to the main menu
+            *menu_option = 1; // the option is set to 1 meaning that the menu can reappear again
+            *counter_var = 1; // this value is set to 1 and is returned back
+            return *counter_var; // return the value
         }
-        case 6:
+        case 6: // if user chose option 6
         {
-            printf("Thanks for playing. Bye!\n");
-            *counter_var = 0;
-            return *counter_var;
+            printf("Thanks for playing. Bye!\n"); // Thank you message
+            *counter_var = 0; // Value of 0 will be returned
+            return *counter_var; // return the value
         }
         
-        default:
+        default: // If none of the options were selected
         {
-            printf("The option entered is not one that was specified. The program will return back to the main menu\n");
-            *menu_option = 1;
-            *counter_var = 1;
-            return *counter_var;
+            printf("The option entered is not one that was specified. The program will return back to the main menu\n"); // message printed to tell user about the mistake
+            *menu_option = 1; // sets value to 1 so that the program goes back to the main menu
+            *counter_var = 1; // value of 1 will be returned back to the main
+            return *counter_var; // return the value
             
         }
     }
