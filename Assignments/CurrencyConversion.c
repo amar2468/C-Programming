@@ -18,7 +18,7 @@ int main()
     float array[SIZE]; // stores the values that the user enters and this will be passed into the function to be converted
     int option; // records the option chosen by the user
     float average; // records the average when the values are converted
-    int counter = 1; // When value is 1, the loop will continually show a menu. If the user wishes to exit the program, the counter will go to 0.
+    int counter = 1; // When value is 1, the loop will continually show a menu. If the user wishes to exit the program, the counter will go to 0
     int no_of_values = 0; // This variable stores the amount of questions the user wishes to ask.
 
     while(counter == 1) // Continually reappears while counter value is 1
